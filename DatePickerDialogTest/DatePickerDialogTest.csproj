@@ -107,6 +107,10 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="PresetnedViewController.cs" />
+    <Compile Include="PresetnedViewController.designer.cs">
+      <DependentUpon>PresetnedViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iOSDatePickerDialog\iOSDatePickerDialog.csproj">

@@ -78,7 +78,7 @@
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="Cancel:" destination="-1" eventType="touchUpInside" id="Pgh-8M-9sA"/>
+                                                        <action selector="Cancel:" destination="-1" eventType="touchUpInside" id="jqx-Qs-4g5"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -106,7 +106,7 @@
                                                         <color key="titleColor" red="1" green="0.53333333329999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="Done:" destination="-1" eventType="touchUpInside" id="sRn-Q0-sql"/>
+                                                        <action selector="Done:" destination="-1" eventType="touchUpInside" id="N51-x9-7yW"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

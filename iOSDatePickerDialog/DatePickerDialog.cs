@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Foundation;
 using UIKit;
 
@@ -19,6 +17,8 @@ namespace iOSDatePickerDialog
         private Action<DateTime> DateSelected;
 
         private String DialogTitle;
+
+        private UIViewController RootViewController;
 
         private DatePickerDialog() : base("DatePickerDialog", null)
         {
@@ -48,25 +48,24 @@ namespace iOSDatePickerDialog
             if (!string.IsNullOrEmpty(DialogTitle))
                 TitleLabel.Text = DialogTitle;
             else
-                TitleLabel.Text = "Selected Date";
+                TitleLabel.Text = "Select Date";
         }
 
         public void Show()
         {
-            var root = UIApplication.SharedApplication.Windows.First().RootViewController;
-
-            root.AddChildViewController(this);
+            RootViewController = ViewControllerHelper.TopViewController();
+            RootViewController.AddChildViewController(this);
 
             View.TranslatesAutoresizingMaskIntoConstraints = false;
             View.Alpha = 0;
-            root.View.AddSubview(View);
+            RootViewController.View.AddSubview(View);
 
-            DidMoveToParentViewController(root);
+            DidMoveToParentViewController(RootViewController);
 
-            View.LeadingAnchor.ConstraintEqualTo(root.View.LeadingAnchor).Active = true;
-            View.TopAnchor.ConstraintEqualTo(root.View.TopAnchor).Active = true;
-            View.TrailingAnchor.ConstraintEqualTo(root.View.TrailingAnchor).Active = true;
-            View.BottomAnchor.ConstraintEqualTo(root.View.BottomAnchor).Active = true;
+            View.LeadingAnchor.ConstraintEqualTo(RootViewController.View.LeadingAnchor).Active = true;
+            View.TopAnchor.ConstraintEqualTo(RootViewController.View.TopAnchor).Active = true;
+            View.TrailingAnchor.ConstraintEqualTo(RootViewController.View.TrailingAnchor).Active = true;
+            View.BottomAnchor.ConstraintEqualTo(RootViewController.View.BottomAnchor).Active = true;
 
             UIView.Animate(0.2, 0, UIViewAnimationOptions.CurveEaseInOut, () => {
                 View.Alpha = 1;
@@ -75,8 +74,6 @@ namespace iOSDatePickerDialog
 
         public void Close()
         {
-            var root = UIApplication.SharedApplication.Windows.First().RootViewController;
-
             WillMoveToParentViewController(null);
 
             UIView.Animate(0.2, 0, UIViewAnimationOptions.CurveEaseInOut, () => {
@@ -97,6 +94,8 @@ namespace iOSDatePickerDialog
             DateSelected?.Invoke((DateTime)DatePicker.Date);
             Close();
         }
+
+
 
         public class Builder 
         {

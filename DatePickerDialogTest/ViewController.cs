@@ -25,14 +25,15 @@ namespace DatePickerDialogTest
             // Release any cached data, images, etc that aren't in use.
         }
 
-        async partial void Show(Foundation.NSObject sender)
+        partial void Show(Foundation.NSObject sender)
         {
-            await new DatePickerDialog.Builder()
-                                .SetMode(UIDatePickerMode.Date)
-                                .SetDefaultDate(DateTime.Now)
-                                .SetDateSelected((obj) => Debug.WriteLine(obj.ToString("D")))
-                                .Build()
-                                .Show();
+            new DatePickerDialog.Builder()
+                                     .SetTitle("My Date")
+                               .SetMode(UIDatePickerMode.Date)
+                               .SetDefaultDate(DateTime.Now)
+                               .SetDateSelected((obj) => Debug.WriteLine(obj.ToString("D")))
+                               .Build()
+                               .Show();
         }
     }
 }

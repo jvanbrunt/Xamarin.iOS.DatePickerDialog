@@ -11,7 +11,7 @@
     <AssemblyName>iOSDatePickerDialog</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Authors>Jacob Van Brunt</Authors>
     <Owners>Jacob Van Brunt</Owners>
     <PackageProjectUrl>https://github.com/jvanbrunt/Xamarin.iOS.DatePickerDialog</PackageProjectUrl>

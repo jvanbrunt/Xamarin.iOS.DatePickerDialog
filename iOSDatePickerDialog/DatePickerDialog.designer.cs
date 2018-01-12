@@ -18,6 +18,9 @@ namespace iOSDatePickerDialog
 		[Outlet]
 		UIKit.UIDatePicker DatePicker { get; set; }
 
+		[Outlet]
+		UIKit.UILabel TitleLabel { get; set; }
+
 		[Action ("Cancel:")]
 		partial void Cancel (Foundation.NSObject sender);
 
@@ -26,14 +29,19 @@ namespace iOSDatePickerDialog
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (ContainerView != null) {
+				ContainerView.Dispose ();
+				ContainerView = null;
+			}
+
 			if (DatePicker != null) {
 				DatePicker.Dispose ();
 				DatePicker = null;
 			}
 
-			if (ContainerView != null) {
-				ContainerView.Dispose ();
-				ContainerView = null;
+			if (TitleLabel != null) {
+				TitleLabel.Dispose ();
+				TitleLabel = null;
 			}
 		}
 	}

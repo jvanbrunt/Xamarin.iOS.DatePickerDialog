@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="ContainerView" destination="0Js-VX-CIr" id="Bef-eC-Doj"/>
                 <outlet property="DatePicker" destination="xGK-Us-CFR" id="t6i-bn-dLt"/>
+                <outlet property="TitleLabel" destination="Nun-eX-vLv" id="gFT-D2-pxr"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
             </connections>
         </placeholder>

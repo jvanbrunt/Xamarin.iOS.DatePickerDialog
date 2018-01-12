@@ -18,6 +18,8 @@ namespace iOSDatePickerDialog
 
         private Action<DateTime> DateSelected;
 
+        private String DialogTitle;
+
         private DatePickerDialog() : base("DatePickerDialog", null)
         {
             ModalPresentationStyle = UIModalPresentationStyle.OverFullScreen;
@@ -42,29 +44,58 @@ namespace iOSDatePickerDialog
 
             if (MinimumDate.HasValue)
                 DatePicker.MinimumDate = (NSDate)MinimumDate;
+
+            if (!string.IsNullOrEmpty(DialogTitle))
+                TitleLabel.Text = DialogTitle;
+            else
+                TitleLabel.Text = "Selected Date";
         }
 
-        public async Task Show()
+        public void Show()
         {
             var root = UIApplication.SharedApplication.Windows.First().RootViewController;
-            await root.PresentViewControllerAsync(this, true);
+
+            root.AddChildViewController(this);
+
+            View.TranslatesAutoresizingMaskIntoConstraints = false;
+            View.Alpha = 0;
+            root.View.AddSubview(View);
+
+            DidMoveToParentViewController(root);
+
+            View.LeadingAnchor.ConstraintEqualTo(root.View.LeadingAnchor).Active = true;
+            View.TopAnchor.ConstraintEqualTo(root.View.TopAnchor).Active = true;
+            View.TrailingAnchor.ConstraintEqualTo(root.View.TrailingAnchor).Active = true;
+            View.BottomAnchor.ConstraintEqualTo(root.View.BottomAnchor).Active = true;
+
+            UIView.Animate(0.2, 0, UIViewAnimationOptions.CurveEaseInOut, () => {
+                View.Alpha = 1;
+            }, null);
         }
 
-        public async Task Close()
+        public void Close()
         {
             var root = UIApplication.SharedApplication.Windows.First().RootViewController;
-            await root.DismissViewControllerAsync(true);
+
+            WillMoveToParentViewController(null);
+
+            UIView.Animate(0.2, 0, UIViewAnimationOptions.CurveEaseInOut, () => {
+                View.Alpha = 0;
+            }, null);
+
+            View.RemoveFromSuperview();
+            RemoveFromParentViewController();
         }
 
-        async partial void Cancel(Foundation.NSObject sender)
+        partial void Cancel(Foundation.NSObject sender)
         {
-            await Close();
+            Close();
         }
 
-        async partial void Done(Foundation.NSObject sender)
+        partial void Done(Foundation.NSObject sender)
         {
             DateSelected?.Invoke((DateTime)DatePicker.Date);
-            await Close();
+            Close();
         }
 
         public class Builder 
@@ -73,6 +104,11 @@ namespace iOSDatePickerDialog
             
             public Builder() {
                 DatePickerDialog = new DatePickerDialog();
+            }
+
+            public Builder SetTitle(String title) {
+                DatePickerDialog.DialogTitle = title;
+                return this;
             }
 
             public Builder SetMode(UIDatePickerMode mode) 
